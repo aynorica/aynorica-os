@@ -8,14 +8,19 @@ applyTo: "packages/**"
 
 ```
 packages/
-├── shared/      # @aynorica/shared - Types, utils, crypto
-├── transport/   # @aynorica/transport - TCP, Redis, NATS, gRPC
-├── gateway/     # @aynorica/gateway - NestJS gateway service
-├── worker/      # @aynorica/worker - NestJS worker service
+├── shared/            # @aynorica/shared - Types, utils, crypto
+├── transport/         # @aynorica/transport - TCP, Redis, NATS, gRPC
+├── gateway/           # @aynorica/gateway - NestJS gateway service
+├── worker/            # @aynorica/worker - NestJS worker service
 ├── aynorica-cli/      # @aynorica/cli - CLI commands
 ├── telegram-bot/      # @aynorica/telegram-bot - Bot service
-├── create-aynorica/   # Scaffolder (published)
 └── aynorica-template/ # Vault template
+
+External Repositories (Published):
+├── create-aynorica    # npm CLI scaffolder (npx create-aynorica)
+                       # Repository: github.com/aynorica/create-aynorica
+                       # Package: https://www.npmjs.com/package/create-aynorica
+                       # Status: v1.0.0 published, fully functional
 ```
 
 ## Dependency Flow
@@ -58,7 +63,7 @@ pnpm add express --filter @aynorica/gateway
 
 ## NestJS Service Pattern
 
-- Module per feature domain
-- Singleton scope (performance)
-- Fastify over Express
-- ValidationPipe globally
+-   Module per feature domain
+-   Singleton scope (performance)
+-   Fastify over Express
+-   ValidationPipe globally
