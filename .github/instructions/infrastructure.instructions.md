@@ -4,78 +4,26 @@ applyTo: "**"
 
 # Infrastructure Services
 
-## 🐘 PostgreSQL Database
+⚠️ **Current Status:** Infrastructure services (PostgreSQL, Redis) exist in external environments, NOT managed by this repository.
 
-**Docker-based Postgres 15 instance for persistent data storage.**
+This repository is a **configuration and documentation system** for the Aynorica agent. Infrastructure deployment will be added in future phases.
 
-### Configuration:
-- **Location**: `.env.postgres` (editable credentials file)
-- **Connection**: `localhost:5432` (exposed port)
-- **Docker Compose**: `docker-compose.postgres.yml`
-- **Volume**: `aynorica-os_db_data` (persistent storage)
+## Planned Services (Not Yet Deployed)
 
-### Management Commands:
-```bash
-# Start database
-scripts/start-postgres.sh
+### PostgreSQL Database (Future)
 
-# Stop database
-docker compose -f docker-compose.postgres.yml down
+-   Purpose: Gateway registry, worker state, session history
+-   Deployment: Docker-based when implemented
 
-# Connect via container
-docker compose -f docker-compose.postgres.yml exec -T db psql -U $POSTGRES_USER -d $POSTGRES_DB
+### Redis Cache (Future)
 
-# Check status
-docker compose -f docker-compose.postgres.yml ps
+-   Purpose: Caching, pub/sub messaging, rate-limiting
+-   Deployment: Docker-based when implemented
 
-# View logs
-docker compose -f docker-compose.postgres.yml logs -f db
-```
+## Current Reality
 
-### Connection Details:
-- **Credentials**: Stored in `.env.postgres` (user-editable)
-- **Default DB**: `aynorica_db`
-- **Port**: 5432 (mapped to host)
-- **Health Check**: Built-in `pg_isready` monitoring
+If you're using PostgreSQL or Redis, they are:
 
-### Use Cases:
-- Gateway registry persistence
-- Worker state management
-- Session/task history
-- Analytics & metrics storage
-- User preferences & settings
-
-**Resource Document:** `Atlas/30 Resources/PostgreSQL Database Infrastructure.md`
-
-**Status:** ✅ Initialized and accepting connections
-
----
-
-## 🔴 Redis Cache
-
-Docker-based Redis instance for caching and ephemeral state.
-
-### Configuration:
-- **Location**: `.env.redis` (editable credentials file)
-- **Connection**: `localhost:6379` (exposed port)
-- **Docker Compose**: `docker-compose.redis.yml`
-- **Volume**: `redis_data` (optional persistence)
-
-### Management Commands:
-```bash
-# Start
-scripts/start-redis.sh
-
-# Stop
-docker compose -f docker-compose.redis.yml down
-
-# Check status
-docker compose -f docker-compose.redis.yml ps
-
-# Connect via container
-docker compose -f docker-compose.redis.yml exec -T redis redis-cli -a "$REDIS_PASSWORD" ping
-```
-
-### Notes:
-- Edit `.env.redis` before starting to set REDIS_PASSWORD
-- Use Redis for caching, sessions, rate-limiting, or Pub/Sub
+1. Running in a separate environment (not this repo)
+2. Managed manually outside this codebase
+3. Documented in your external Obsidian vault skills

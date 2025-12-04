@@ -4,10 +4,12 @@ applyTo: "packages/**"
 
 # Aynorica Mesh Architecture
 
-## Package Structure
+⚠️ **Current Status:** No `packages/` directory exists yet. This document describes the PLANNED architecture for when the monorepo is scaffolded.
+
+## Planned Package Structure
 
 ```
-packages/
+packages/ (NOT YET CREATED)
 ├── shared/            # @aynorica/shared - Types, utils, crypto
 ├── transport/         # @aynorica/transport - TCP, Redis, NATS, gRPC
 ├── gateway/           # @aynorica/gateway - NestJS gateway service
@@ -17,11 +19,15 @@ packages/
 └── aynorica-template/ # Vault template
 
 External Repositories (Published):
-├── create-aynorica    # npm CLI scaffolder (npx create-aynorica)
+├── create-aynorica    # ✅ npm CLI scaffolder (npx create-aynorica)
                        # Repository: github.com/aynorica/create-aynorica
                        # Package: https://www.npmjs.com/package/create-aynorica
                        # Status: v1.0.0 published, fully functional
 ```
+
+## When Packages Are Created
+
+This instruction file will activate once `packages/` directory exists. Until then, it serves as a specification.
 
 ## Dependency Flow
 

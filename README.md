@@ -28,162 +28,212 @@ This will:
 ### Option 2: Manual Setup
 
 1. Clone this repository
-2. Install dependencies: `pnpm install`
-3. Configure your Obsidian vault path in `.env`
-4. Start services: `pnpm start`
+2. Read the instruction files in `.github/instructions/`
+3. Set up your external Obsidian vault (separate from this repo)
+4. Configure MCP integrations if needed (Google Calendar, Obsidian)
 
 ---
 
-## 📦 Architecture
+## 📦 What This Repository Actually Is
 
-Aynorica consists of several interconnected systems:
+**Aynorica OS is an AI Agent Configuration System**, not a deployed application.
 
-### Core Components
+### Current Components (✅ Exist)
 
--   **Vault Layer** (`/Atlas`, `/Inbox`, `/Archive`) — Obsidian-based knowledge storage
--   **Gateway** (`packages/gateway`) — NestJS-based entry point for all external interactions
--   **Workers** (`packages/workers`) — Background task processors (inbox processing, skill indexing)
--   **Mesh** (`packages/mesh`) — Inter-service communication framework
--   **Skills** (`Atlas/30 Resources/*Skill.md`) — RAG-indexed knowledge modules
+-   **Agent Instructions** (`.github/instructions/`) — 15 modular instruction files (~15,000 words)
+-   **Prompt Templates** (`.github/prompts/`) — 25 reusable prompts for various domains
+-   **Agent Configs** (`.github/agents/`) — Agent mode definitions
+-   **Published Package** — `create-aynorica` CLI for template distribution
+-   **Documentation** — Architecture specs, project tracker, handoff reports
 
-### Infrastructure
+### Planned Components (❌ Not Yet Built)
 
--   **PostgreSQL** — Persistent storage (gateway registry, worker state)
--   **Redis** — Caching and pub/sub messaging
--   **Docker** — Containerized services
+-   **Gateway** (`packages/gateway`) — NestJS entry point (design phase)
+-   **Workers** (`packages/workers`) — Background processors (design phase)
+-   **Mesh** (`packages/mesh`) — Inter-service communication (design phase)
+-   **Infrastructure** — PostgreSQL, Redis, Docker Compose (design phase)
+
+### External Dependencies (Separate Systems)
+
+-   **Vault Layer** — Your Obsidian vault (`/Atlas`, `/Inbox`, `/Archive`)
+-   **Skills** — RAG-indexed knowledge in your vault (`Atlas/30 Resources/`)
+-   **RAG Server** — Skill search API (if running at `localhost:3001`)
+-   **MCP Servers** — Google Calendar, Obsidian integrations
 
 ---
 
-## 🧠 Key Features
+## 🧠 What This System Provides
 
-### 1. Intelligent Inbox Processing
+### 1. AI Agent Configuration (✅ Operational)
 
-Automatically converts raw inputs (PDFs, text, images) into structured Markdown files with:
+-   **15 instruction files** defining behavior, personality, protocols
+-   **Psychological calibration** tuned to user profile
+-   **Modular loading** via `applyTo` patterns
+-   **Trade-off oriented** decision frameworks
+-   **Anti-dispersal protocols** for focus enforcement
 
--   YAML frontmatter (schema-enforced)
--   Semantic linking to Areas and Projects
--   Status tracking (🟥 To-Read, 🟧 In Progress, 🟩 Done)
+### 2. Prompt Library (✅ Operational)
 
-### 2. RAG-Powered Skills
+-   **25+ reusable prompts** for architecture, backend, security, workflows
+-   **Domain-organized** (architecture, backend, typescript, mesh, etc.)
+-   **Best practices codified** in prompt templates
 
--   **23+ indexed skills** covering architecture, security, psychology, development patterns
--   **Hybrid search** (vector + keyword) for precise knowledge retrieval
--   **Auto-indexing** via workers when skills are created/updated
+### 3. Vault Protocols (✅ Documented)
 
-### 3. Multi-Agent Orchestration
+-   **Inbox processing workflows** with strict frontmatter schemas
+-   **CODE/PARA methodology** for knowledge organization
+-   **Dataview query patterns** for dashboard generation
+-   **Status tracking** (🟥 To-Read, 🟧 In Progress, 🟩 Done)
+-   **Template system** for consistent file creation
 
--   **Gateway** coordinates task routing between specialized workers
--   **Workers** handle domain-specific logic (OCR, embeddings, task management)
--   **Mesh** provides resilient communication (circuit breakers, retries)
+### 4. MCP Integrations (✅ If Configured Externally)
 
-### 4. Calendar Integration
+-   **Google Calendar** management via MCP tools
+-   **Obsidian vault** operations via MCP plugin
 
--   Google Calendar MCP integration for event management
+### 5. Future Capabilities (📋 Planned)
+
+-   **Multi-agent orchestration** (gateway + workers)
+-   **RAG-powered skill retrieval** (if external server exists)
+-   **Automated inbox processing** (when workers are built)
+-   **Infrastructure services** (PostgreSQL, Redis)
 -   Timezone-aware scheduling (configured during setup)
 
 ---
 
 ## 📁 Directory Structure
 
+### This Repository (Configuration System)
+
 ```
 aynorica-os/
 ├── .github/
-│   ├── instructions/          # Agent configuration files (personalized)
-│   └── prompts/               # Reusable prompt templates
+│   ├── agents/                # Agent mode definitions (aynorica.agent.md)
+│   ├── instructions/          # 15 modular instruction files (~15,000 words)
+│   ├── prompts/               # 25 reusable prompt templates
+│   └── PROJECT-TRACKER.md     # Published packages & milestones
+├── Archive/
+│   ├── create-aynorica.md     # Implementation plan (completed)
+│   └── Aynorica Logs/         # Session handoff reports
+├── Inbox/
+│   └── Aynorica/              # Current session logs
+└── README.md                  # This file
+```
+
+### Your Obsidian Vault (Separate Location)
+
+```
+vault/
 ├── Atlas/
 │   ├── 10 Projects/           # Active projects
 │   ├── 20 Areas/              # Areas of responsibility
 │   └── 30 Resources/          # Skills, MOCs, processed inputs
 ├── Inbox/
 │   ├── Amir/                  # User input stream
-│   └── Aynorica/              # Orchestrator logs
+│   └── Aynorica/              # Agent memory logs
 ├── Archive/                   # Cold storage
-├── System/Templates/          # Obsidian templates
-├── packages/
-│   ├── gateway/               # API gateway (NestJS)
-│   ├── workers/               # Background processors
-│   ├── mesh/                  # Communication layer
-│   └── shared/                # Common utilities
-└── scripts/                   # Operational scripts
+└── System/Templates/          # Obsidian templates (tpl_*.md)
 ```
 
 ---
 
-## 🛠️ Development
+## 🛠️ How to Use This Repository
 
-### Prerequisites
+### For AI Agents (GitHub Copilot)
 
--   Node.js v22+
--   pnpm v10+
--   Docker & Docker Compose
--   PostgreSQL 15 (via Docker)
--   Redis 7 (via Docker)
+1. Load the agent configuration:
 
-### Setup
+    - Read `.github/agents/aynorica.agent.md`
+    - Auto-load instruction files based on `applyTo` patterns
+    - Use prompt templates from `.github/prompts/` as needed
+
+2. Key instruction files:
+    - `identity.instructions.md` — Core behavior and tone
+    - `functions.instructions.md` — 17 primary capabilities
+    - `memory.instructions.md` — RAG retrieval protocols
+    - `schema.instructions.md` — Vault frontmatter rules
+
+### For Developers
+
+1. **Clone and explore**:
+
+    ```bash
+    git clone https://github.com/aynorica/aynorica-os.git
+    cd aynorica-os
+    ```
+
+2. **Create your own setup**:
+
+    ```bash
+    npx create-aynorica
+    # Follow prompts to personalize instruction templates
+    ```
+
+3. **Modify instructions**:
+    - Edit files in `.github/instructions/`
+    - Use `applyTo` patterns for contextual loading
+    - Commit and push changes
+
+### Future: When Packages Are Built
 
 ```bash
-# Install dependencies
+# Install dependencies (when package.json exists)
 pnpm install
 
-# Start infrastructure
-./scripts/start-postgres.sh
-./scripts/start-redis.sh
-
-# Build packages
+# Build packages (when packages/ exists)
 pnpm run build
 
-# Start all services
-pnpm start
-```
-
-### Testing
-
-```bash
-# Run all tests
-pnpm test
-
-# Test specific package
-pnpm --filter @aynorica/gateway test
 ```
 
 ---
 
 ## 📝 Configuration
 
-### Environment Variables
+### Personalizing Instructions
 
-Create `.env` files in package directories:
+Use `create-aynorica` to generate personalized instruction files:
 
-```env
-# Gateway
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-POSTGRES_USER=aynorica_user
-POSTGRES_PASSWORD=your_password
-POSTGRES_DB=aynorica_db
-
-REDIS_HOST=localhost
-REDIS_PORT=6379
-REDIS_PASSWORD=your_redis_password
-
-# Workers
-VAULT_PATH=/path/to/your/obsidian/vault
-OPENAI_API_KEY=your_openai_key
+```bash
+npx create-aynorica my-aynorica-setup
 ```
 
-### Obsidian Plugins Required
+This will prompt for:
 
--   **Dataview** (with JavaScript queries enabled)
--   **Templater** (template folder: `System/Templates`)
+-   `{{USER_NAME}}` — Your name
+-   `{{USER_EMAIL}}` — Your email
+-   `{{TIMEZONE_DESC}}` — Timezone description (e.g., "Istanbul")
+-   `{{TIMEZONE_OFFSET}}` — Timezone offset (e.g., "+03:00")
+
+All instruction templates will be personalized and written to `.github/instructions/`.
+
+### Obsidian Vault Setup (Separate)
+
+If using with Obsidian:
+
+-   **Dataview** (enable JavaScript queries)
+-   **Templater** (set folder: `System/Templates`)
 -   **Kanban**
+
+2. Create vault structure:
+
+    - `/Atlas/10 Projects/`
+    - `/Atlas/20 Areas/`
+    - `/Atlas/30 Resources/`
+    - `/Inbox/Amir/`
+    - `/Inbox/Aynorica/`
+    - `/Archive/`
+    - `/System/Templates/`
+
+3. Copy templates from this repo's documentation to your vault's `System/Templates/`
 
 ---
 
 ## 🔗 Related Projects
 
--   [create-aynorica](https://github.com/aynorica/create-aynorica) — Scaffolding CLI
--   [Obsidian MCP Server](https://github.com/yourhandle/obsidian-mcp) — Vault integration
--   [Google Workspace MCP](https://github.com/yourhandle/google-workspace-mcp) — Calendar integration
+-   ✅ [create-aynorica](https://github.com/aynorica/create-aynorica) — Published npm package (v1.0.0)
+-   📋 Obsidian MCP Server — External dependency (if using)
+-   📋 Google Workspace MCP — External dependency (if using)
+-   📋 RAG Skills Server — External dependency (if using)
 
 ---
 
