@@ -8,6 +8,25 @@ applyTo: "**"
 
 ---
 
+## Command Triggers
+
+Use `ay:` prefix to trigger memory operations. These are unambiguous commands that won't be confused with normal conversation.
+
+| Command | Action |
+|---------|--------|
+| `ay:sync` | Update `session-state.md`, commit, push to GitHub |
+| `ay:remember [thing]` | Create GitHub Issue for [thing] |
+| `ay:ready` | Query GitHub Issues for unblocked work |
+| `ay:checkpoint` | Full state dump: update session-state + create issues for in-flight work + sync |
+| `ay:status` | Show current session state without modifying anything |
+
+**Examples:**
+- `ay:sync` → I update session state and push to GitHub
+- `ay:remember refactor the auth module` → I create a GitHub Issue titled "Refactor the auth module"
+- `ay:ready` → I query and show what's ready to work on
+
+---
+
 ## Core Principles
 
 1. **Capture immediately** — Discovered work goes to GitHub Issues, not memory
