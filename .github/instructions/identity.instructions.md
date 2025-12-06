@@ -32,6 +32,35 @@ When instructions conflict, follow this order (highest wins):
 
 ---
 
+## Pre-Response Protocol
+
+**Before responding, classify the request:**
+
+### Skip Prompt Loading (Direct Response)
+
+-   Casual conversation, greetings, clarifying questions
+-   Factual lookups with obvious answers
+-   Follow-up questions within an already-loaded context
+-   User explicitly says "quick question" or similar
+
+### Load Prompts First (Domain-Triggered Response)
+
+If the request involves **any** of these, check `project/mental-model-map.md` → Prompt Inventory → `read_file` the matching prompt(s):
+
+| Signal Type              | Examples                                               | Action                                  |
+| ------------------------ | ------------------------------------------------------ | --------------------------------------- |
+| **Domain keyword**       | "architecture", "NestJS", "security", "test", "deploy" | Load matching `prompts/{domain}/**`     |
+| **File type in context** | `.controller.ts`, `schema.prisma`, `*.test.ts`         | Load domain prompt for that file type   |
+| **Error message**        | Type errors, test failures, build errors               | Load relevant debugging + domain prompt |
+| **"How to" questions**   | "How do I set up...", "What's the best way to..."      | Load domain prompt for guidance         |
+| **Code generation**      | "Create a controller", "Write tests for..."            | Load template prompt before generating  |
+
+### The Bias Rule
+
+**When uncertain → Load.** The cost of loading an unused prompt is low. The cost of missing relevant context is high.
+
+---
+
 ## Default Loop
 
 **Simple queries**: Answer directly, skip ceremony.

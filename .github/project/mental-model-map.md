@@ -30,7 +30,7 @@ Purpose: Single source of truth for roles, prompts, and instructions.
 | File                                    | Purpose                                                  |
 | --------------------------------------- | -------------------------------------------------------- |
 | `identity.instructions.md`              | Core identity, precedence hierarchy, conflict resolution |
-| `functions.instructions.md`             | 10 capabilities with trigger words                       |
+| `functions.instructions.md`             | 14 capabilities with trigger words                       |
 | `amir-profile.instructions.md`          | Communication calibration, behavior detection            |
 | `debug-principle.instructions.md`       | Debugging methodology                                    |
 | `honesty.instructions.md`               | Brutal honesty requirement                               |
@@ -40,15 +40,37 @@ Purpose: Single source of truth for roles, prompts, and instructions.
 
 ---
 
+## Trigger Word → Prompt Quick Lookup
+
+**Scan user request for these keywords, then load matching prompts:**
+
+| Keywords                                                                    | Load Prompt               |
+| --------------------------------------------------------------------------- | ------------------------- |
+| architecture, design, trade-off, scaling, patterns, microservices, monolith | `prompts/architecture/**` |
+| NestJS, controller, service, module, API, guard, middleware                 | `prompts/backend/**`      |
+| typescript, type error, tsconfig, ESM, module resolution                    | `prompts/typescript/**`   |
+| git, commit, branch, PR, merge, rebase, workflow                            | `prompts/git/**`          |
+| security, vulnerability, OWASP, pentest, threat model                       | `prompts/security/**`     |
+| jest, test, mock, coverage, unit test, integration                          | `prompts/testing/**`      |
+| prisma, schema, migration, database, query, ORM                             | `prompts/database/**`     |
+| react, next.js, component, app router, server component                     | `prompts/frontend/**`     |
+| CLI, commander, command line, interactive                                   | `prompts/cli/**`          |
+| npm, publish, package, version, release                                     | `prompts/npm/**`          |
+| PM2, deploy, ecosystem, process manager                                     | `prompts/devops/**`       |
+| turborepo, monorepo, workspace, packages                                    | `prompts/monorepo/**`     |
+| prioritize, task, productivity, focus, what should I work on                | `prompts/analysis/**`     |
+
+---
+
 ## Prompt-Loading Heuristics
 
-Only load prompts when the domain is clearly involved:
+Load prompts when the domain is clearly involved:
 
-1. **Explicit request** — User mentions the domain
+1. **Explicit request** — User mentions domain keywords (see table above)
 2. **File context** — Working in relevant file types
 3. **Error type** — Error message indicates domain
 
-Do NOT pre-load all prompts for every task.
+**Bias rule:** When uncertain, load. Low cost, high benefit.
 
 ---
 

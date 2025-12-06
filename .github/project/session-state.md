@@ -2,41 +2,78 @@
 
 ## Last Updated
 
-2025-12-05T16:00:00Z
+2025-12-06T14:00:00Z
 
 ## Active Context
 
-Initial setup of persistent memory system for Aynorica. Understanding session completed, mental model updated.
+**Bug Bounty Sprint** — Mission to generate $7,800 by end of December 2025.
+
+## Financial Situation
+
+- **Need:** $10,000 by Dec 31
+- **Have:** $200 now + $2,000 salary incoming = $2,200
+- **Gap:** $7,800 in ~25 days
+- **Deadline:** HARD (rent + legal)
+
+## Constraints
+
+- No professional network to tap
+- No half-built projects to monetize
+- Limited time (squeezing around day job)
+- Freelance profiles exist but no reputation
+- Burp Pro / paid tools not available
+
+## Strategy Decided
+
+**Primary Track: Bug Bounty Hunting**
+- Platform: HackerOne
+- Approach: Focus on business logic, IDOR, auth bypasses, race conditions
+- Why: Fits Amir's pattern of "finding clever systems/strategies" + grinding
+
+**Tools Status (Windows + WSL Ubuntu):**
+- ✓ Python 3.14, Git, Docker, WSL Ubuntu 22.04
+- ✗ Need to install: nuclei, ffuf, subfinder, httpx, nmap, Burp Community, ZAP
 
 ## In Progress
 
-_None currently_
+- Setting up security tooling in WSL
+- Transitioning to WSL environment for bug bounty work
 
-## Blocked
+## Next Steps (WSL Session)
 
-_None currently_
-
-## Ready Queue
-
-_Queue empty — use GitHub Issues to populate_
-
-## Recently Completed
-
--   Understanding Session (2025-12-05) — Added cognitive-behavioral model to `amir-profile.instructions.md`
--   Persistent Memory Protocol (2025-12-05) — Created `persistent-memory.instructions.md`
+1. Install security tools in WSL Ubuntu
+2. Pick 2-3 HackerOne programs (fast triage, good payouts)
+3. Start recon on first target
+4. Focus on auth flows, API endpoints, business logic
 
 ## Session Notes
 
--   Amir expressed satisfaction with creating Aynorica ("feels like control over wisdom")
--   12-15 hour focus capacity when genuinely engaged
--   Emotional spike (shame + frustration + defiance) breaks freeze states
--   Prefers building infrastructure/systems over completing isolated tasks
+- Rejected crypto trading strategy (too risky, no edge, gambling disguised as engineering)
+- Initially proposed Kali VPS + custom tools — redirected to use existing WSL + free tools
+- Amir has `create-aynorica` npm package ready for quick deployment
 
 ## Next Session Prompt
 
 ```
-Resume work on aynorica-os. Check GitHub Issues for ready work:
-- repo:aynorica/aynorica-os is:issue is:open -label:status:blocked
+CONTEXT: Bug Bounty Sprint for $7,800 by Dec 31
 
-If no issues exist, ask Amir what's on his mind or what project needs attention.
+We're setting up for bug bounty hunting. Current status:
+- WSL Ubuntu 22.04 available
+- Need to install: nuclei, ffuf, subfinder, httpx, nmap, ZAP or Burp Community
+- Target: Find 1-3 valid bugs worth $2k-$8k total
+
+IMMEDIATE ACTIONS:
+1. Install security tools (one command chain)
+2. Ask Amir for HackerOne program access list
+3. Pick targets with fast triage + good payout history
+4. Start recon on first target
+
+FOCUS AREAS:
+- Business logic flaws
+- IDOR (Insecure Direct Object Reference)
+- Authentication/Authorization bypasses
+- Race conditions
+- API misconfigurations
+
+Remember: Time is critical. No scope creep. Ship bugs, not infrastructure.
 ```
