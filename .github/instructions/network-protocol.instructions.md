@@ -91,39 +91,44 @@ If command fails:
 - Node is deployed to an external project
 - GitHub access available
 
-**Flow**:
+**Implementation**: See `.github/workflows/leave-protocol.md` for full 10-step workflow
+
+**Flow Summary**:
 ```
-1. Confirm: "This will prepare departure from {project-path}. Continue?"
-   ↓ [User approves]
-2. Scan entire .github/ for:
-   - New prompts created
+1. Validate departure eligibility (not Prime, has external project)
+2. User confirmation prompt
+3. Scan .github/ for transferable knowledge:
+   - New prompts
    - Modified instructions
    - Session learnings
    - Profile observations
-3. Filter: Keep transferable knowledge, discard project-specific details
-4. Generate departure-report.md with:
-   - Duration (created → departed dates)
-   - Project context summary
-   - Reusable learnings
-   - New prompts/instructions table
-   - Amir profile updates
-   - Recommended parent actions
+4. Generate departure report using template:
+   - Duration metrics
+   - Transferable learnings categorized
+   - Recommended parent actions (integrate/propagate/archive)
+   - Network impact assessment
 5. Commit departure report to current branch
-6. Create PR on aynorica-os:
+6. Create harvest PR:
    - Source: {this-node-branch}
    - Target: {parent-branch}
-   - Title: "[Harvest] {this-node} departure"
-   - Body: Link to departure-report.md
-7. Update registry: set status = "departing", add to pendingMerges[]
-8. Sync to GitHub
-9. Report: "Departure prepared. PR created: {pr-url}. Notify parent to run: ay:merge {this-node}"
+   - Title: "[Harvest] {this-node} → {parent-node}"
+   - Body: Summary + link to departure-report.md
+   - Labels: type:harvest, status:pending-review
+7. Update registry:
+   - Set node status = "departing"
+   - Add pendingMerge entry with PR details
+   - Update parent's pendingMerges[] array
+8. Sync to GitHub (commit + push)
+9. Report completion with PR URL and next steps
 ```
 
 **Post-conditions**:
-- Departure report committed
-- PR created
-- Registry updated with pending merge
-- Node status = "departing"
+- Departure report committed (`.github/handoff/{node-id}-departure-{date}.md`)
+- Harvest PR created with labels
+- Registry updated (node status + pending merge metadata)
+- Node remains operational until merged
+
+**Template**: `.github/templates/departure-report.template.md`
 
 ---
 
