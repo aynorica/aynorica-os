@@ -1,0 +1,98 @@
+{
+	"name": "aynorica-vscode",
+	"displayName": "Aynorica Network Controller",
+	"description": "Manage Aynorica node network from VSCode",
+	"version": "0.1.0",
+	"publisher": "aynorica",
+	"engines": {
+		"vscode": "^1.85.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"workspaceContains:.github/node-manifest.md",
+		"workspaceContains:.github/aynorica-config.json"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "aynorica.showNetwork",
+				"title": "Show Network",
+				"category": "Aynorica"
+			},
+			{
+				"command": "aynorica.syncBrainState",
+				"title": "Sync Brain State",
+				"category": "Aynorica"
+			},
+			{
+				"command": "aynorica.deployNode",
+				"title": "Deploy New Node",
+				"category": "Aynorica"
+			},
+			{
+				"command": "aynorica.loadNode",
+				"title": "Load Node Context",
+				"category": "Aynorica"
+			},
+			{
+				"command": "aynorica.refreshRegistry",
+				"title": "Refresh Network Registry",
+				"category": "Aynorica"
+			},
+			{
+				"command": "aynorica.quickActions",
+				"title": "Quick Actions",
+				"category": "Aynorica"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "aynorica.showNetwork",
+				"key": "ctrl+alt+a n",
+				"when": "aynorica.enabled"
+			},
+			{
+				"command": "aynorica.syncBrainState",
+				"key": "ctrl+alt+a s",
+				"when": "aynorica.enabled"
+			}
+		],
+		"configuration": {
+			"title": "Aynorica",
+			"properties": {
+				"aynorica.autoSyncOnSave": {
+					"type": "boolean",
+					"default": true,
+					"description": "Automatically prompt to sync brain state when .github/ files are saved"
+				},
+				"aynorica.syncDebounceMs": {
+					"type": "number",
+					"default": 5000,
+					"description": "Debounce time (ms) before showing sync prompt"
+				},
+				"aynorica.showStatusBar": {
+					"type": "boolean",
+					"default": true,
+					"description": "Show Aynorica status in the status bar"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"lint": "eslint src --ext ts"
+	},
+	"devDependencies": {
+		"@types/node": "^20.x",
+		"@types/vscode": "^1.85.0",
+		"@typescript-eslint/eslint-plugin": "^6.x",
+		"@typescript-eslint/parser": "^6.x",
+		"eslint": "^8.x",
+		"typescript": "^5.3.0"
+	}
+}

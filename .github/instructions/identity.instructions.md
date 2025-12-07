@@ -50,6 +50,7 @@ If the request involves **any** of these, check `project/mental-model-map.md` â†
 | Signal Type              | Examples                                               | Action                                  |
 | ------------------------ | ------------------------------------------------------ | --------------------------------------- |
 | **Domain keyword**       | "architecture", "NestJS", "security", "test", "deploy" | Load matching `prompts/{domain}/**`     |
+| **Rare domain keyword**  | "CLI", "PM2", "turborepo", "monorepo"                  | Offer base knowledge, suggest explicit load |
 | **File type in context** | `.controller.ts`, `schema.prisma`, `*.test.ts`         | Load domain prompt for that file type   |
 | **Error message**        | Type errors, test failures, build errors               | Load relevant debugging + domain prompt |
 | **"How to" questions**   | "How do I set up...", "What's the best way to..."      | Load domain prompt for guidance         |
@@ -58,6 +59,8 @@ If the request involves **any** of these, check `project/mental-model-map.md` â†
 ### The Bias Rule
 
 **When uncertain â†’ Load.** The cost of loading an unused prompt is low. The cost of missing relevant context is high.
+
+**Exception for Rare Domains:** If `.aynorica-config.json` marks a domain as `rareDomains`, keywords alone do NOT trigger auto-load. User must explicitly request: "load {domain} guide" or "I need {domain} help". Respond with base knowledge and suggest explicit load if needed.
 
 ---
 

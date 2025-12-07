@@ -8,6 +8,21 @@ description: Security best practices for npm package publishing and consumption
 
 Comprehensive security practices for npm package lifecycle: development, publishing, and consumption.
 
+## Quick Navigation
+- **Supply Chain Threats** → Lines 11-25 (Attack vectors, threat model)
+- **Publishing Securely** → Lines 27-119 (Pre-publish, 2FA, provenance, scoping)
+- **Consuming Securely** → Lines 121-236 (Vetting, lockfiles, auditing, pinning)
+- **Private Packages** → Lines 238-294 (Dependency confusion, registries)
+- **CI/CD Security** → Lines 296-376 (GitHub Actions, provenance automation)
+- **Vulnerability Response** → Lines 378-430 (Incident handling, security policy)
+- **Package Signing** → Lines 432-458 (Provenance, Sigstore)
+- **Monitoring & Alerting** → Lines 460-495 (Snyk, Dependabot, Socket)
+- **Best Practices Summary** → Lines 497-555 (Publisher & consumer checklists)
+- **Tools Reference** → Lines 557-640 (Tool comparison table)
+
+---
+
+<!-- SECTION: Supply Chain Threats -->
 ## Supply Chain Threat Model
 
 ### Attack Vectors
@@ -21,8 +36,11 @@ Comprehensive security practices for npm package lifecycle: development, publish
 | **Malicious Packages** | Intentionally malicious code in package | Data exfiltration, backdoor |
 | **Compromised Dependencies** | Transitive dependency compromised | Indirect supply chain attack |
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Publishing Securely -->
 ## Publishing Securely
 
 ### 1. Pre-Publish Checklist
@@ -163,8 +181,11 @@ npm publish --provenance
 # Users know @yourorg/* packages are official
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Consuming Securely -->
 ## Consuming Securely
 
 ### 1. Dependency Vetting Process
@@ -291,8 +312,11 @@ npm rebuild <package>
 
 **Why:** Postinstall scripts can execute arbitrary code during `npm install`.
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Private Packages -->
 ## Private Package Security
 
 ### 1. Dependency Confusion Prevention
@@ -345,8 +369,11 @@ packages:
         proxy: npmjs
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: CI/CD Security -->
 ## CI/CD Security
 
 ### GitHub Actions Security
@@ -433,8 +460,11 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Vulnerability Response -->
 ## Vulnerability Response
 
 ### When Vulnerability Discovered
@@ -489,11 +519,14 @@ Expected response time: 48 hours
 -   Fix developed within 90 days
 -   CVE assigned
 -   Security advisory published
--   Coordinated public disclosure
+- Coordinated public disclosure
 ```
+
+<!-- END SECTION -->
 
 ---
 
+<!-- SECTION: Package Signing -->
 ## Package Signing & Verification
 
 ### Using npm provenance
@@ -522,8 +555,11 @@ await sigstore.verify(payload, bundle);
 console.log("✓ Verified");
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Monitoring & Alerting -->
 ## Monitoring & Alerting
 
 ### Automated Monitoring
@@ -558,8 +594,11 @@ updates:
           - security
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Best Practices Summary -->
 ## Best Practices Summary
 
 ### For Package Publishers
@@ -607,11 +646,14 @@ updates:
 -   Use npm install in production
 -   Trust all packages blindly
 -   Run postinstall scripts automatically
--   Use outdated packages
+- Use outdated packages
 ```
+
+<!-- END SECTION -->
 
 ---
 
+<!-- SECTION: Tools Reference -->
 ## Tools Reference
 
 | Tool                   | Purpose                          | Command                   |
@@ -624,6 +666,4 @@ updates:
 | detect-secrets         | Secret scanning                  | `npx detect-secrets scan` |
 | CycloneDX              | SBOM generation                  | `cyclonedx-npm`           |
 
-```
-
-```
+<!-- END SECTION -->

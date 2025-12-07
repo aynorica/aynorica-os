@@ -1,0 +1,7 @@
+# Aynorica OS gitignore
+
+# Memory hot-context (session-specific, not persisted)
+.github/memory/hot-context.md
+
+# VSCode MCP config (contains secrets)
+.vscode/mcp.json
