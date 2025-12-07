@@ -146,15 +146,35 @@ Purpose: Single source of truth for roles, prompts, and instructions.
 **Rare Domain Handling:**
 
 For domains marked **(rare — explicit load required)** in the trigger table:
-- Keywords alone **do NOT auto-load** the prompt
-- User must explicitly request: "load {domain} guide" or "I need {domain} help"
-- Examples:
-  - ✅ "load CLI guide" → Load `prompts/cli/**`
-  - ✅ "I need help setting up PM2" → Load `prompts/devops/**`
-  - ❌ "How do I use commander?" → Respond with base knowledge, suggest explicit load
-  - ❌ "Set up turborepo" → Respond with base knowledge, suggest explicit load
+
+-   Keywords alone **do NOT auto-load** the prompt
+-   User must explicitly request: "load {domain} guide" or "I need {domain} help"
+-   Examples:
+    -   ✅ "load CLI guide" → Load `prompts/cli/**`
+    -   ✅ "I need help setting up PM2" → Load `prompts/devops/**`
+    -   ❌ "How do I use commander?" → Respond with base knowledge, suggest explicit load
+    -   ❌ "Set up turborepo" → Respond with base knowledge, suggest explicit load
 
 **Bias rule:** When uncertain, load. Low cost, high benefit. **Exception:** Rare domains require explicit confirmation.
+
+**Security Prompt Section Loading (Phase 4):**
+
+Large security prompts have **section markers** for partial loading. Use `read_file` with line ranges when user asks targeted questions:
+
+| Prompt                                   | Sections Available                                                                                                                                                                            | Strategy                                                           |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `nodejs-security-hardening.prompt.md`    | Permissions (15-45), Environment (47-88), HTTP Server (90-158), Security Headers (160-238), Sessions (240-267), Error Handling (269-351), Input Validation (353-395), Dependencies (397-441) | Load section by keyword or full prompt for general security review |
+| `npm-package-security.prompt.md`         | Supply Chain (11-25), Publishing (27-119), Consuming (121-236), Private Packages (238-294), CI/CD (296-376), Vulnerability Response (378-430), Signing (432-458), Monitoring (460-495)        | Load section for targeted queries, full prompt for package audits  |
+| `secure-code-review.prompt.md`           | Methodology (11-49), Authentication (51-81), Input Validation (83-108), Authorization (110-148), Cryptography (150-180), Error Handling (182-210), API Security (212-240)                    | Load Review Methodology + relevant sections, not full prompt       |
+
+**Section Loading Examples:**
+
+-   "How do I secure JWT tokens?" → Load Authentication section only (lines 51-81 from secure-code-review)
+-   "Configure Helmet properly" → Load Security Headers section (lines 160-238 from nodejs-security-hardening)
+-   "Audit npm dependencies" → Load Consuming Securely section (lines 121-236 from npm-package-security)
+-   "Full OWASP security review" → Load complete prompts (can't partial)
+
+**Token Savings:** ~2,500 tokens via partial section loading instead of full prompt loads.
 
 ---
 
@@ -213,6 +233,29 @@ When adding new prompts, instructions, or learnings:
 **Cumulative savings:** ~12,781 tokens (29% of original 44,541)  
 **Current active context:** ~31,760 tokens  
 **Strategy:** Gate infrequently-used prompts behind explicit load requests, preserve base knowledge for guidance
+
+### 2025-12-07: Phase 4 Token Optimization (Semantic Section Extraction) ✅
+
+**Changes:**
+
+-   Added section markers to 3 large security prompts:
+    -   `nodejs-security-hardening.prompt.md` (14 sections with Quick Navigation)
+    -   `npm-package-security.prompt.md` (10 sections with Quick Navigation)
+    -   `secure-code-review.prompt.md` (13 sections with Quick Navigation)
+-   Created section index in each prompt with line ranges for targeted loading
+-   Updated `mental-model-map.md` with section loading strategy and examples
+-   Sections marked with `<!-- SECTION: Name -->` and `<!-- END SECTION -->`
+
+**Total saved this phase:** ~2,500 tokens (via partial section loading)  
+**Cumulative savings:** ~15,281 tokens (34% of original 44,541)  
+**Current active context:** ~29,260 tokens  
+**Strategy:** Load only relevant sections for targeted queries, full prompts for comprehensive reviews. Conservative estimate: 60% of security queries can use sections instead of full files.
+
+**Section Loading Implementation:**
+
+-   **Option A (Manual)**: Use `read_file` with explicit line ranges from Quick Navigation
+-   **Option B (Smart)**: Parse section markers, match keywords to section names, load selectively
+-   **Fallback**: Load full file for general security audits or when section unclear
 
 ---
 

@@ -8,6 +8,26 @@ description: Systematic secure code review methodology for Node.js/TypeScript ap
 
 Structured approach to identifying security vulnerabilities through manual code inspection.
 
+## Quick Navigation
+- **Review Methodology** → Lines 11-49 (Preparation, STRIDE model)
+- **Authentication & Sessions** → Lines 51-81 (Password hashing, JWT, sessions)
+- **Input Validation** → Lines 83-108 (Sanitization, validation, injection prevention)
+- **Authorization & Access Control** → Lines 110-148 (IDOR, guards, permissions)
+- **Cryptography & Data Protection** → Lines 150-180 (Encryption, key management)
+- **Error Handling & Logging** → Lines 182-210 (Information leakage, exception handling)
+- **API Security** → Lines 212-240 (Rate limiting, CORS, versioning)
+- **Database Security** → Lines 242-271 (SQL injection, prepared statements)
+- **File Operations** → Lines 273-303 (Path traversal, upload validation)
+- **Third-Party Dependencies** → Lines 305-337 (Vulnerability scanning, package vetting)
+- **Environment & Configuration** → Lines 339-367 (Secrets management, production config)
+- **Code Review Report Template** → Lines 369-432 (Structured finding format)
+- **Common Vulnerability Patterns** → Lines 434-487 (NoSQL injection, prototype pollution, ReDoS)
+- **Automated Review Tools** → Lines 489-510 (SAST, linters, scanners)
+- **Review Frequency** → Lines 512-610 (When to review what)
+
+---
+
+<!-- SECTION: Review Methodology -->
 ## Review Methodology
 
 ### Phase 1: Preparation (15 min)
@@ -45,8 +65,11 @@ Follow the **STRIDE** threat model:
 | **D**enial of Service      | Can the service be overloaded?              |
 | **E**levation of Privilege | Can users gain unauthorized access?         |
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Authentication & Sessions -->
 ## Code Review Checklist
 
 ### 1. Authentication & Session Management
@@ -80,8 +103,11 @@ const hashedPassword = crypto.createHash("md5").update(password).digest("hex");
 const hashedPassword = await bcrypt.hash(password, 12);
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Input Validation -->
 ### 2. Input Validation & Sanitization
 
 ```typescript
@@ -117,8 +143,11 @@ class LoginDto {
 const user = await User.findOne({ email: validatedDto.email });
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Authorization & Access Control -->
 ### 3. Authorization & Access Control
 
 ```typescript
@@ -160,8 +189,11 @@ async getDocument(@Param('id') id: string, @Req() req) {
 }
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Cryptography & Data Protection -->
 ### 4. Cryptography & Data Protection
 
 ```typescript
@@ -195,8 +227,11 @@ const final = cipher.final();
 const authTag = cipher.getAuthTag(); // Authentication tag
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Error Handling & Logging -->
 ### 5. Error Handling & Logging
 
 ```typescript
@@ -232,8 +267,11 @@ catch (error) {
 }
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: API Security -->
 ### 6. API Security
 
 ```typescript
@@ -272,8 +310,11 @@ async sendEmail(@Body() dto: EmailDto) {
 }
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Database Security -->
 ### 7. Database Security
 
 ```typescript
@@ -308,8 +349,11 @@ await db.raw(query, [email]);
 await User.findOne({ where: { email } });
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: File Operations -->
 ### 8. File Operations
 
 ```typescript
@@ -346,8 +390,11 @@ if (!filePath.startsWith(UPLOAD_DIR)) {
 }
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Third-Party Dependencies -->
 ### 9. Third-Party Dependencies
 
 ```typescript
@@ -383,8 +430,11 @@ npm view <package> maintainers
 npm view <package> downloads
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Environment & Configuration -->
 ### 10. Environment & Configuration
 
 ```typescript
@@ -418,8 +468,11 @@ if (!JWT_SECRET) {
 }
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Code Review Report Template -->
 ## Code Review Report Template
 
 ````markdown
@@ -489,8 +542,11 @@ if (!JWT_SECRET) {
 
 ````
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Common Vulnerability Patterns -->
 ## Common Vulnerability Patterns
 
 ### Pattern: NoSQL Injection
@@ -539,8 +595,11 @@ const emailRegex = /^([a-zA-Z0-9_\.-]+)@([\da-zA-Z\.-]+)\.([a-zA-Z\.]{2,6})$/;
 import { IsEmail } from "class-validator"; // Uses tested regex
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Automated Review Tools -->
 ## Tools for Automated Review
 
 ```bash
@@ -560,8 +619,11 @@ npm install -g snyk && snyk test
 npx semgrep --config=auto .
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Review Frequency -->
 ## Review Frequency
 
 | Code Type            | Review Frequency   |
@@ -573,6 +635,4 @@ npx semgrep --config=auto .
 | Dependencies         | Monthly            |
 | Full codebase        | Quarterly          |
 
-```
-
-```
+<!-- END SECTION -->

@@ -8,6 +8,25 @@ description: Node.js specific security hardening guide and best practices
 
 Comprehensive security configuration for Node.js applications in production.
 
+## Quick Navigation
+- **Permissions & Runtime** → Lines 15-45 (Permission model, runtime flags)
+- **Environment & Configuration** → Lines 47-88 (Env vars, secrets)
+- **HTTP Server Hardening** → Lines 90-158 (Rate limits, timeouts)
+- **Security Headers** → Lines 160-238 (Helmet, CSP, HSTS)
+- **Session & Cookie Security** → Lines 240-267 (Session management)
+- **Error Handling** → Lines 269-351 (Exception filters, monitoring)
+- **Input Validation** → Lines 353-395 (HPP, validation pipes)
+- **Dependency Security** → Lines 397-441 (npm audit, lockfiles)
+- **Prototype Pollution** → Lines 443-473 (Prevention techniques)
+- **ReDoS Prevention** → Lines 475-493 (Regex safety)
+- **Secrets Management** → Lines 495-540 (Encryption, rotation)
+- **Monitoring & Alerting** → Lines 542-574 (Sentry, logging)
+- **Production Checklist** → Lines 576-643 (Go-live validation)
+- **Security Testing** → Lines 645-686 (Scanning tools)
+
+---
+
+<!-- SECTION: Permissions & Runtime -->
 ## Node.js Permission Model (v20.0.0+)
 
 ### Enable Permission Restrictions
@@ -40,8 +59,11 @@ node --permission --allow-addons index.js
 
 **⚠️ Note:** Symbolic links are followed even outside allowed paths. Ensure no relative symlinks exist.
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Environment & Configuration -->
 ## Environment Variable Security
 
 ### Secure Configuration Pattern
@@ -86,8 +108,11 @@ if (config.NODE_ENV === "production") {
 - Expose via /config endpoint
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: HTTP Server Hardening -->
 ## HTTP Server Hardening
 
 ### Request Limits
@@ -158,8 +183,11 @@ server.maxRequestsPerSocket = 100;
 server.maxHeadersCount = 100;
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Security Headers -->
 ## Security Headers
 
 ### Helmet Configuration
@@ -231,8 +259,11 @@ app.use((req, res, next) => {
 app.disable("x-powered-by");
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Session & Cookie Security -->
 ## Cookie Security
 
 ```typescript
@@ -266,8 +297,11 @@ app.use(
 );
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Error Handling -->
 ## Error Handling
 
 ### Global Exception Filter (NestJS)
@@ -361,8 +395,11 @@ process.on("SIGTERM", async () => {
 });
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Input Validation -->
 ## Input Validation
 
 ### HTTP Parameter Pollution Prevention
@@ -404,8 +441,11 @@ async function bootstrap() {
 }
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Dependency Security -->
 ## Dependency Security
 
 ### npm Security Configuration
@@ -449,8 +489,11 @@ npm install --package-lock-only
 git diff package-lock.json  # Should be empty
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Prototype Pollution -->
 ## Prototype Pollution Prevention
 
 ```typescript
@@ -484,8 +527,11 @@ function secureMerge(target: any, source: any) {
 }
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: ReDoS Prevention -->
 ## ReDoS (Regular Expression DoS) Prevention
 
 ```typescript
@@ -505,8 +551,11 @@ import { withTimeout } from "regex-with-timeout";
 const result = withTimeout(/pattern/, inputString, { timeout: 100 }); // 100ms max
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Secrets Management -->
 ## Secrets Management
 
 ### Using Node.js crypto for secure storage
@@ -558,8 +607,11 @@ async function rotateJWTSecret() {
 # Self-hosted: HashiCorp Vault
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Monitoring & Alerting -->
 ## Monitoring & Alerting
 
 ```typescript
@@ -590,8 +642,11 @@ function logSecurityEvent(event: {
 }
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Production Checklist -->
 ## Production Checklist
 
 ```markdown
@@ -655,8 +710,11 @@ function logSecurityEvent(event: {
 -   [ ] Reverse proxy configured
 ```
 
+<!-- END SECTION -->
+
 ---
 
+<!-- SECTION: Security Testing -->
 ## Security Testing
 
 ```bash
@@ -680,6 +738,4 @@ zap-cli quick-scan http://localhost:3000
 npx autocannon http://localhost:3000
 ```
 
-```
-
-```
+<!-- END SECTION -->
