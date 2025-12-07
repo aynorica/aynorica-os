@@ -96,16 +96,18 @@ None
 ### Mental Model Token Optimization ✅ COMPLETE (2025-12-07)
 
 **Final Results:**
-- **Total reduction**: 34% (15,281 tokens saved)
-- **Original size**: 44,541 tokens
-- **Current size**: ~29,260 tokens
-- **Time invested**: ~6 hours across 4 phases
+
+-   **Total reduction**: 34% (15,281 tokens saved)
+-   **Original size**: 44,541 tokens
+-   **Current size**: ~29,260 tokens
+-   **Time invested**: ~6 hours across 4 phases
 
 **Phases Completed:**
-- Phase 1: Archive + consolidation (~12,000 tokens)
-- Phase 2: Instruction compression (~900 tokens)
-- Phase 3: Rare domain gating (~1,672 tokens)
-- Phase 4: Semantic section extraction (~2,500 tokens)
+
+-   Phase 1: Archive + consolidation (~12,000 tokens)
+-   Phase 2: Instruction compression (~900 tokens)
+-   Phase 3: Rare domain gating (~1,672 tokens)
+-   Phase 4: Semantic section extraction (~2,500 tokens)
 
 **GitHub Issue**: #3 (closed)
 

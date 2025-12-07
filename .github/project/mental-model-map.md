@@ -161,11 +161,11 @@ For domains marked **(rare — explicit load required)** in the trigger table:
 
 Large security prompts have **section markers** for partial loading. Use `read_file` with line ranges when user asks targeted questions:
 
-| Prompt                                   | Sections Available                                                                                                                                                                            | Strategy                                                           |
-| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| `nodejs-security-hardening.prompt.md`    | Permissions (15-45), Environment (47-88), HTTP Server (90-158), Security Headers (160-238), Sessions (240-267), Error Handling (269-351), Input Validation (353-395), Dependencies (397-441) | Load section by keyword or full prompt for general security review |
-| `npm-package-security.prompt.md`         | Supply Chain (11-25), Publishing (27-119), Consuming (121-236), Private Packages (238-294), CI/CD (296-376), Vulnerability Response (378-430), Signing (432-458), Monitoring (460-495)        | Load section for targeted queries, full prompt for package audits  |
-| `secure-code-review.prompt.md`           | Methodology (11-49), Authentication (51-81), Input Validation (83-108), Authorization (110-148), Cryptography (150-180), Error Handling (182-210), API Security (212-240)                    | Load Review Methodology + relevant sections, not full prompt       |
+| Prompt                                | Sections Available                                                                                                                                                                           | Strategy                                                           |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `nodejs-security-hardening.prompt.md` | Permissions (15-45), Environment (47-88), HTTP Server (90-158), Security Headers (160-238), Sessions (240-267), Error Handling (269-351), Input Validation (353-395), Dependencies (397-441) | Load section by keyword or full prompt for general security review |
+| `npm-package-security.prompt.md`      | Supply Chain (11-25), Publishing (27-119), Consuming (121-236), Private Packages (238-294), CI/CD (296-376), Vulnerability Response (378-430), Signing (432-458), Monitoring (460-495)       | Load section for targeted queries, full prompt for package audits  |
+| `secure-code-review.prompt.md`        | Methodology (11-49), Authentication (51-81), Input Validation (83-108), Authorization (110-148), Cryptography (150-180), Error Handling (182-210), API Security (212-240)                    | Load Review Methodology + relevant sections, not full prompt       |
 
 **Section Loading Examples:**
 
@@ -256,6 +256,44 @@ When adding new prompts, instructions, or learnings:
 -   **Option A (Manual)**: Use `read_file` with explicit line ranges from Quick Navigation
 -   **Option B (Smart)**: Parse section markers, match keywords to section names, load selectively
 -   **Fallback**: Load full file for general security audits or when section unclear
+
+### 2025-12-07: Dynamic Context Loading Architecture ✅
+
+**Epic #10 — Phases Completed:**
+
+1. **Phase 1: Bootstrap Layer** (#4) ✅
+
+    - Created `bootstrap/core-identity.md` (~250 tokens)
+    - Created `bootstrap/capability-index.md` (~358 tokens)
+    - Created `bootstrap/context-loader.md` (~303 tokens)
+    - Total: ~911 tokens (54% under 2K target)
+
+2. **Phase 2: Memory System** (#6) ✅
+
+    - Created `memory/session.md` (~87 tokens, compressed from 416)
+    - Created `memory/hot-context.template.md` (~50 tokens)
+    - Archived `project/session-state.md` → `archive/sessions/`
+    - Updated `persistent-memory.instructions.md` with three-tier system
+
+3. **Phases 3 & 5** (#7, #8) — Closed as not-planned
+
+    - VSCode auto-attaches `instructions/*.instructions.md` (~5K tokens)
+    - Cannot control platform attachment behavior
+    - Bootstrap layer ready for future platform support
+
+4. **Phase 4: Agent Definition** (#5) ✅
+    - Updated `agents/aynorica.agent.md` to document architecture
+    - Added three-tier context system table
+    - Preserved old version → `archive/agents-aynorica.agent-v1.md`
+
+**Architecture Created:**
+| Tier | Location | Tokens | Purpose |
+|------|----------|--------|---------|
+| 0 (Bootstrap) | `bootstrap/*.md` | ~911 | Core identity, capabilities, loading rules |
+| 1 (Session) | `memory/session.md` | ~87 | Current mission, ready queue, hot context |
+| 2 (Hot) | `memory/hot-context.md` | Variable | In-session ephemeral state |
+
+**Platform Constraint:** VSCode mode attachments auto-load all instructions (~5K tokens). Bootstrap layer is architecturally correct for when selective loading becomes available.
 
 ---
 

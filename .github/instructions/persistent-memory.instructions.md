@@ -12,13 +12,13 @@ applyTo: "**"
 
 Use `ay:` prefix to trigger memory operations. These are unambiguous commands that won't be confused with normal conversation.
 
-| Command               | Action                                                                          |
-| --------------------- | ------------------------------------------------------------------------------- |
-| `ay:sync`             | Update `session-state.md`, commit, push to GitHub                               |
-| `ay:remember [thing]` | Create GitHub Issue for [thing]                                                 |
-| `ay:ready`            | Query GitHub Issues for unblocked work                                          |
-| `ay:checkpoint`       | Full state dump: update session-state + create issues for in-flight work + sync |
-| `ay:status`           | Show current session state without modifying anything                           |
+| Command               | Action                                                                       |
+| --------------------- | ---------------------------------------------------------------------------- |
+| `ay:sync`             | Update `memory/session.md`, commit, push to GitHub                           |
+| `ay:remember [thing]` | Create GitHub Issue for [thing]                                              |
+| `ay:ready`            | Query GitHub Issues for unblocked work                                       |
+| `ay:checkpoint`       | Full state dump: update session.md + create issues for in-flight work + sync |
+| `ay:status`           | Show current session state without modifying anything                        |
 
 **Examples:**
 
@@ -88,9 +88,18 @@ In issue body, use this format:
 
 ## Session State Protocol
 
-### File Location
+### File Locations
 
-`.github/project/session-state.md`
+| File | Purpose | Committed |
+|------|---------|----------|
+| `memory/session.md` | Persistent state (~150 tokens) | ✅ Yes |
+| `memory/hot-context.md` | Ephemeral session state | ❌ No (.gitignore) |
+
+### Memory Tiers
+
+1. **Tier 0 (Bootstrap)**: `bootstrap/*.md` — always loaded (~900 tokens)
+2. **Tier 1 (Session)**: `memory/session.md` — loaded on mission queries (~150 tokens)
+3. **Tier 2 (Hot)**: `memory/hot-context.md` — in-session only, not persisted
 
 ### When to Update
 
@@ -101,42 +110,25 @@ In issue body, use this format:
 ### State File Structure
 
 ```markdown
-# Session State
+# Session
 
-## Last Updated
-
-[ISO timestamp]
-
-## Active Context
-
-[What project/area is currently in focus]
-
-## In Progress
-
--   #[issue] — [title] ([% complete])
-    -   Done: [what's finished]
-    -   Next: [immediate next step]
-
-## Blocked
-
--   #[issue] — blocked by #[blocker] ([reason])
+## Mission
+[Current epic/focus — one line]
 
 ## Ready Queue
+1. #[issue] [title] ← **NOW** (if active)
+2. #[issue] [title]
+3. #[issue] [title]
 
-1. #[issue] — [title] (priority: [0-3])
-2. #[issue] — [title] (priority: [0-3])
+## Blockers
+[List or "None"]
 
-## Recently Completed
+## Recent
+- ✅ #[issue] [title]
+- ✅ #[issue] [title]
 
--   #[issue] — [title] (closed: [date])
-
-## Session Notes
-
-[Anything Amir mentioned, decisions made, context to remember]
-
-## Next Session Prompt
-
-[Pre-formatted prompt for continuing work]
+## Hot Context
+[Epic #, Phase, Key state — one line]
 ```
 
 ---
@@ -145,7 +137,7 @@ In issue body, use this format:
 
 ### On Session Start
 
-1. Read `.github/project/session-state.md`
+1. Read `.github/memory/session.md` (compact state)
 2. Check GitHub Issues: `is:open repo:aynorica/aynorica-prime`
 3. Identify ready work: `is:open -label:status:blocked`
 4. Orient to context before starting
@@ -166,10 +158,10 @@ When I notice something that needs doing but isn't the current task:
 
 ### On Session End
 
-1. Update session-state.md with current progress
+1. Update `memory/session.md` with current progress
 2. Close completed issues with summary comment
 3. Update blocked/ready labels as needed
-4. Write "Next Session Prompt" for continuity
+4. Clear `memory/hot-context.md` (ephemeral)
 5. Commit and push to GitHub
 
 ---
